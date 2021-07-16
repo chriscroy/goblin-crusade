@@ -1,3 +1,5 @@
+#These must be at the top of the file or the QTEs don't work
+#I do not understand why.
 from __future__ import print_function
 from msvcrt import kbhit, getwch
 import time
@@ -14,7 +16,6 @@ def start_screen():
 ██║   ██║██║   ██║██╔══██╗██║     ██║██║╚██╗██║
 ╚██████╔╝╚██████╔╝██████╔╝███████╗██║██║ ╚████║
  ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝
-
  ██████╗██████╗ ██╗   ██╗███████╗ █████╗ ██████╗ ███████╗
 ██╔════╝██╔══██╗██║   ██║██╔════╝██╔══██╗██╔══██╗██╔════╝
 ██║     ██████╔╝██║   ██║███████╗███████║██║  ██║█████╗
@@ -64,7 +65,7 @@ def approach():
                 print("Walk up, talk, print words, arrogant conversation")
                 print("Goblins aren't scared at all, but not aggressive either")
                 print("""
-                1. Draw your dagger and fight!
+                1. Draw your dagger and fight them both!
                 2. Fire curare arrow to take one out
                 3. Abandon quest
                 4. Join the goblins""")
@@ -72,76 +73,124 @@ def approach():
                 choice = input()
                 choice = int(choice)
                 if choice == 1:
-                    #You're not a fighter, this is supposed to be a bad option.
-                    print("Hard random fight.")
-                    hard_fight = random.randrange(1,3)
-                    if hard_fight == 3:
-                        print("You win! You search their bodies and find lockpicks.")
-                        inventory.append("Lockpicks")
-                        cave_entrance(inventory)
-                        break
-                    else:
-                        print("Death!")
-                        dead()
-                        break
-                elif choice == 2:
-                    choice = 0
-                    while not int(choice) in range(1,5):
-                        #print("Ambush, then easy deterministic fight.")
-                        print(""""Choices
-                        1. Obviously wrong combat choice
-                        2. Obviously correct combat choice
-                        3. Item combat choice
-                        4. Pretty obviously wrong combat choice
-                        5. Obviously wrong combat choice""")
-                        print(inventory)
-                        choice = input()
-                        choice = int(choice)
-                        if choice == 1:
-                            print("Bad option")
-                            dead()
-                            break
-                        elif choice == 2:
-                            print("Good option! You find lockpicks on their corpse.")
-                            inventory.append("Lockpicks")
-                            cave_entrance(inventory)
-                            break
-                        elif choice == 3:
-                            #this is a trap option, designed to drain items
-                            print("Use Capsacin! You find lockpicks on their corpse.")
-                            inventory.remove("Capsacin spray")
-                            inventory.append("Lockpicks")
-                            cave_entrance(inventory)
-                            break
-                        elif choice == 4:
-                            print("Bad option")
-                            dead()
-                            break
-                        elif choice == 5:
-                            print("Bad option")
+                    move = '1'
+                    time_limit = 2.5 # in seconds
+                    validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                    print(validation)
+                    if validation == move:
+                        move = '2'
+                        validation = timed_input('LOW STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                        if validation == move:
+                            move = '4'
+                            validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                            if validation == move:
+                                move = '3'
+                                #changing the time limit because one is down
+                                time_limit = 4.5
+                                validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                                if validation == move:
+                                    move = '4'
+                                    validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                                    if validation == move:
+                                        print("VICTORY! Lockpicks!")
+                                        inventory.append("Lockpicks")
+                                        cave_entrance(inventory)
+                                        break
+                                    elif validation is None:
+                                        print("TOO SLOW!")
+                                        dead()
+                                        break
+                                    else:
+                                        print("WRONG MOVE!")
+                                        dead()
+                                        break
+                                elif validation is None:
+                                    print("TOO SLOW!")
+                                    dead()
+                                    break
+                                else:
+                                    print("WRONG MOVE!")
+                                    dead()
+                                    break
+                            elif validation is None:
+                                print("TOO SLOW!")
+                                dead()
+                                break
+                            else:
+                                print("WRONG MOVE!")
+                                dead()
+                                break
+                        elif validation is None:
+                            print("TOO SLOW!")
                             dead()
                             break
                         else:
-                            print(""""Choices
-                            1. Obviously wrong combat choice
-                            2. Obviously correct combat choice
-                            3. Item combat choice
-                            4. Pretty obviously wrong combat choice
-                            5. Obviously wrong combat choice""")
-                            print(inventory)
+                            print("WRONG MOVE!")
+                            dead()
+                            break
+                    elif validation is None:
+                        print("TOO SLOW")
+                        dead()
+                        break
+                    else:
+                        print("WRONG MOVE")
+                        dead()
+                        break
+                elif choice == 2:
+                    print("Fire curare arrow, easy fight")
                 elif choice == 3:
+                    print("You abandon your crusade")
                     abandon_crusade()
                     break
                 elif choice == 4:
+                    print("You join the goblins.")
                     join_goblins()
                     break
-                else:
-                    print("""Choices
-                    1. Draw your dagger and fight!
-                    2. Fire curare arrow to take one out.
-                    3. Abandon your quest
-                    4. Join the goblins""")
+        elif choice == 2:
+            choice = 0
+            while not int(choice) in range(1,5):
+                #print("Ambush, then easy deterministic fight.")
+                print(""""Choices
+                1. Obviously wrong combat choice
+                2. Obviously correct combat choice
+                3. Item combat choice
+                4. Pretty obviously wrong combat choice
+                5. Obviously wrong combat choice""")
+                print(inventory)
+                choice = input()
+                choice = int(choice)
+                if choice == 1:
+                    print("Bad option")
+                    dead()
                     break
+                elif choice == 2:
+                    print("Good option! You find lockpicks on their corpse.")
+                    inventory.append("Lockpicks")
+                    cave_entrance(inventory)
+                    break
+                elif choice == 3:
+                    #this is a trap option, designed to drain items
+                    print("Use Capsacin! You find lockpicks on their corpse.")
+                    inventory.remove("Capsacin spray")
+                    inventory.append("Lockpicks")
+                    cave_entrance(inventory)
+                    break
+                elif choice == 4:
+                    print("Bad option")
+                    dead()
+                    break
+                elif choice == 5:
+                    print("Bad option")
+                    dead()
+                    break
+                else:
+                    print(""""Choices
+                    1. Obviously wrong combat choice
+                    2. Obviously correct combat choice
+                    3. Item combat choice
+                    4. Pretty obviously wrong combat choice
+                    5. Obviously wrong combat choice""")
+                    print(inventory)
         elif choice == 2:
             choice = 0
             while not int(choice) in range(1,5):
@@ -500,7 +549,8 @@ def duelist_room(inventory):
 # python2 or python3
 # this does not deal with arrow keys.
 # this probably won't work in IDLE
-
+# I copied this code off Stack Exchange.
+# I don't know how it works but it does.
 def print_flush(*args):
     print(*args, end='')
     sys.stdout.flush()
@@ -608,7 +658,6 @@ def dead():
     ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝
     ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
      ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
-
      ██████╗ ██╗   ██╗███████╗██████╗
     ██╔═══██╗██║   ██║██╔════╝██╔══██╗
     ██║   ██║██║   ██║█████╗  ██████╔╝
