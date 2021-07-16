@@ -1,6 +1,8 @@
 import random
+import winsound
 def start_screen():
-#    winsound.PlaySound("filename", winsound.SND_ASYNC | winsound.SND_ALIAS)
+    winsound.PlaySound(None, winsound.SND_ASYNC)
+    winsound.PlaySound("sounds/REBORN - Visions of Freedom WAV.wav", winsound.SND_ASYNC)
     print(f"""
  ██████╗  ██████╗ ██████╗ ██╗     ██╗███╗   ██╗
 ██╔════╝ ██╔═══██╗██╔══██╗██║     ██║████╗  ██║
@@ -14,7 +16,7 @@ def start_screen():
 ██║     ██████╔╝██║   ██║███████╗███████║██║  ██║█████╗
 ██║     ██╔══██╗██║   ██║╚════██║██╔══██║██║  ██║██╔══╝
 ╚██████╗██║  ██║╚██████╔╝███████║██║  ██║██████╔╝███████╗
-                    PRESS ANY ENTER TO BEGIN THE CRUSADE""")
+        PRESS ENTER TO START THE CRUSADE""")
 
     choice = input()
     print("Type 1 to read the introduction, 2 to skip the introduction")
@@ -24,7 +26,8 @@ def start_screen():
         choice = int(choice)
         if choice == 1:
             print("Alchemist, noble, hatred of goblins")
-            print("Description of your stuff?")
+            print("Description of your stuff")
+            input("Press enter to continue")
             approach()
             break
         elif choice == 2:
@@ -34,6 +37,8 @@ def start_screen():
             print("Type 1 to read the introduction, 2 to skip the introduction")
 #inventory = ['Dagger', 'Curare arrow', 'Smoke bomb', 'Fire spray', 'Capsacin spray', 'Deathcap powder']
 def approach():
+    winsound.PlaySound(None, winsound.SND_ASYNC)
+    winsound.PlaySound("sounds/REBORN - Midnight Creeping WAV - Looped.wav", winsound.SND_ASYNC | winsound.SND_LOOP)
     inventory = ['Dagger', 'Curare arrow', 'Smoke bomb', 'Fire spray', 'Acid vial', 'Capsacin spray', 'Deathcap powder', 'Firecrackers']
     print("Description of environment, cave entrance, time of day")
     print("Description of two goblin guards")
@@ -473,6 +478,10 @@ def abandon_crusade():
 
 def dead():
     #player goes here whenever they die
+    #stops music
+    winsound.PlaySound(None, winsound.SND_ASYNC)
+    #plays death music
+    winsound.PlaySound("sounds/REBORN - The Fallen WAV.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
     print("""
      ██████╗  █████╗ ███╗   ███╗███████╗
     ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
