@@ -1,3 +1,7 @@
+from __future__ import print_function
+from msvcrt import kbhit, getwch
+import time
+import sys
 import random
 import winsound
 def start_screen():
@@ -56,13 +60,14 @@ def approach():
         choice = int(choice)
         if choice == 1:
             choice = 0
-            while not choice in range(1,3):
+            while not choice in range(1,4):
                 print("Walk up, talk, print words, arrogant conversation")
                 print("Goblins aren't scared at all, but not aggressive either")
                 print("""
                 1. Draw your dagger and fight!
                 2. Fire curare arrow to take one out
-                3. Abandon quest""")
+                3. Abandon quest
+                4. Join the goblins""")
                 print(inventory)
                 choice = input()
                 choice = int(choice)
@@ -125,13 +130,17 @@ def approach():
                             5. Obviously wrong combat choice""")
                             print(inventory)
                 elif choice == 3:
-                    print("Write long story, another secret way to have a happy ending")
+                    abandon_crusade()
+                    break
+                elif choice == 4:
+                    join_goblins()
                     break
                 else:
                     print("""Choices
                     1. Draw your dagger and fight!
                     2. Fire curare arrow to take one out.
-                    3. Abandon your quest""")
+                    3. Abandon your quest
+                    4. Join the goblins""")
                     break
         elif choice == 2:
             choice = 0
@@ -437,6 +446,112 @@ def crossroads(inventory):
 def duelist_room(inventory):
     print("You have entered a common area, filled with noncombatants.")
     print(inventory)
+    print("The goblin says, \"Are you ready?\" ")
+    print("""
+    1. Engage in honorable combat
+    2. Use capsacin spray
+    3. Join the goblins""")
+    choice = 0
+    while not choice in range(1,3):
+        choice = input()
+        choice = int(choice)
+        if choice == 1:
+            move = '1'
+            time_limit = 2 # in seconds
+            validation = timed_input('HE SLASHES HIGH\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+            print(validation)
+            if validation == move:
+                move = '2'
+                validation = timed_input('HE SLASHES LOW\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                if validation == move:
+                    print("Test successful")
+                elif validation is None:
+                    print("TOO SLOW!")
+                    dead()
+                    break
+                else:
+                    print("WRONG MOVE!")
+                    dead()
+                    break
+            elif validation is None:
+                print("TOO SLOW")
+                dead()
+                break
+            else:
+                print("WRONG MOVE")
+                dead()
+                break
+        elif choice == 2:
+            print("Spray capsacin")
+            remove.inventory("Capsacin spray")
+            break
+        elif choice == 3:
+            print("You decide to join the goblins.")
+            join_goblins()
+            break
+        else:
+            print("""
+            1. Engage him in honorable combat
+            2. Use capsacin spray
+            3. Join the goblins""")
+
+# timed input function
+# Windows only
+# python2 or python3
+# this does not deal with arrow keys.
+# this probably won't work in IDLE
+
+def print_flush(*args):
+    print(*args, end='')
+    sys.stdout.flush()
+
+def timed_input(prompt='', timeout=None):
+    if timeout is None:
+        return input(prompt)
+    print_flush(prompt)
+    start = time.time()
+    response = ''
+    while time.time() - start < timeout:
+        if kbhit():
+            char = getwch()
+            if char == '\r':
+                break
+            elif char == '\x08': # backspace
+                if response:
+                    print_flush(char, char)
+                    response = response[:-1]
+            else:
+                print_flush(char)
+                response += char
+        time.sleep(0.01)
+    else:
+        response = None
+    print()
+    return response
+
+### Test / Demo code:
+def samurai():
+    move = '1'
+    time_limit = 2 # in seconds
+    validation = timed_input('HE SLASHES HIGH\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+    print(validation)
+    if validation == move:
+        move = '2'
+        validation = timed_input('HE SLASHES LOW\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+        if validation == key:
+            print("Test successful")
+        elif validation is None:
+            print("TOO SLOW!")
+        else:
+            print("WRONG MOVE!")
+    elif validation is None:
+        print("TOO SLOW")
+        dead()
+    else:
+        print("WRONG MOVE")
+        dead()
+
+
 
 def living_quarters(inventory):
     print("You have entered the goblin's living quarters.")
@@ -474,6 +589,10 @@ def goblin_chief(inventory):
 
 def abandon_crusade():
     print("If at any time the player abandons their quest, they go here.")
+    quit()
+
+def join_goblins():
+    print("If at any time the player decides to join the goblins, they go here")
     quit()
 
 def dead():
