@@ -1,26 +1,19 @@
 import random
 def start_screen():
+#    winsound.PlaySound("filename", winsound.SND_ASYNC | winsound.SND_ALIAS)
     print(f"""
-  ▄████  ▒█████   ▄▄▄▄    ██▓     ██▓ ███▄    █
- ██▒ ▀█▒▒██▒  ██▒▓█████▄ ▓██▒    ▓██▒ ██ ▀█   █
-▒██░▄▄▄░▒██░  ██▒▒██▒ ▄██▒██░    ▒██▒▓██  ▀█ ██▒
-░▓█  ██▓▒██   ██░▒██░█▀  ▒██░    ░██░▓██▒  ▐▌██▒
-░▒▓███▀▒░ ████▓▒░░▓█  ▀█▓░██████▒░██░▒██░   ▓██░
- ░▒   ▒ ░ ▒░▒░▒░ ░▒▓███▀▒░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒
-  ░   ░   ░ ▒ ▒░ ▒░▒   ░ ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░
-░ ░   ░ ░ ░ ░ ▒   ░    ░   ░ ░    ▒ ░   ░   ░ ░
-      ░     ░ ░   ░          ░  ░ ░           ░
-                       ░
- ▄████▄   ██▀███   █    ██   ██████  ▄▄▄      ▓█████▄ ▓█████
-▒██▀ ▀█  ▓██ ▒ ██▒ ██  ▓██▒▒██    ▒ ▒████▄    ▒██▀ ██▌▓█   ▀
-▒▓█    ▄ ▓██ ░▄█ ▒▓██  ▒██░░ ▓██▄   ▒██  ▀█▄  ░██   █▌▒███
-▒▓▓▄ ▄██▒▒██▀▀█▄  ▓▓█  ░██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌▒▓█  ▄
-▒ ▓███▀ ░░██▓ ▒██▒▒▒█████▓ ▒██████▒▒ ▓█   ▓██▒░▒████▓ ░▒████▒
-░ ░▒ ▒  ░░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒ ░░ ▒░ ░
-  ░  ▒     ░▒ ░ ▒░░░▒░ ░ ░ ░ ░▒  ░ ░  ▒   ▒▒ ░ ░ ▒  ▒  ░ ░  ░
-░          ░░   ░  ░░░ ░ ░ ░  ░  ░    ░   ▒    ░ ░  ░    ░
-░ ░         ░        ░           ░        ░  ░   ░       ░  ░
-░                                              ░
+ ██████╗  ██████╗ ██████╗ ██╗     ██╗███╗   ██╗
+██╔════╝ ██╔═══██╗██╔══██╗██║     ██║████╗  ██║
+██║  ███╗██║   ██║██████╔╝██║     ██║██╔██╗ ██║
+██║   ██║██║   ██║██╔══██╗██║     ██║██║╚██╗██║
+╚██████╔╝╚██████╔╝██████╔╝███████╗██║██║ ╚████║
+ ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝
+
+ ██████╗██████╗ ██╗   ██╗███████╗ █████╗ ██████╗ ███████╗
+██╔════╝██╔══██╗██║   ██║██╔════╝██╔══██╗██╔══██╗██╔════╝
+██║     ██████╔╝██║   ██║███████╗███████║██║  ██║█████╗
+██║     ██╔══██╗██║   ██║╚════██║██╔══██║██║  ██║██╔══╝
+╚██████╗██║  ██║╚██████╔╝███████║██║  ██║██████╔╝███████╗
                     PRESS ANY ENTER TO BEGIN THE CRUSADE""")
 
     choice = input()
@@ -79,6 +72,7 @@ def approach():
                         break
                     else:
                         print("Death!")
+                        dead()
                         break
                 elif choice == 2:
                     choice = 0
@@ -95,6 +89,7 @@ def approach():
                         choice = int(choice)
                         if choice == 1:
                             print("Bad option")
+                            dead()
                             break
                         elif choice == 2:
                             print("Good option! You find lockpicks on their corpse.")
@@ -110,9 +105,11 @@ def approach():
                             break
                         elif choice == 4:
                             print("Bad option")
+                            dead()
                             break
                         elif choice == 5:
                             print("Bad option")
+                            dead()
                             break
                         else:
                             print(""""Choices
@@ -129,7 +126,7 @@ def approach():
                     print("""Choices
                     1. Draw your dagger and fight!
                     2. Fire curare arrow to take one out.
-                    3. Surrender""")
+                    3. Abandon your quest""")
                     break
         elif choice == 2:
             choice = 0
@@ -146,6 +143,7 @@ def approach():
                 choice = int(choice)
                 if choice == 1:
                     print("Bad option")
+                    dead()
                     break
                 elif choice == 2:
                     print("Good option! You find lockpicks on their corpse.")
@@ -160,9 +158,11 @@ def approach():
                     break
                 elif choice == 4:
                     print("Bad option")
+                    dead()
                     break
                 elif choice == 5:
                     print("Bad option")
+                    dead()
                     break
                 else:
                     print(""""Choices
@@ -193,6 +193,7 @@ def approach():
                         break
                     else:
                         print("You lose!")
+                        dead()
                         break
                 elif choice == 2:
                     print("Use smoke bomb, guaranteed")
@@ -470,5 +471,32 @@ def abandon_crusade():
     print("If at any time the player abandons their quest, they go here.")
     quit()
 
+def dead():
+    #player goes here whenever they die
+    print("""
+     ██████╗  █████╗ ███╗   ███╗███████╗
+    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
+    ██║  ███╗███████║██╔████╔██║█████╗
+    ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝
+    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
+     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
+
+     ██████╗ ██╗   ██╗███████╗██████╗
+    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+    ██║   ██║██║   ██║█████╗  ██████╔╝
+    ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝ """)
+    choice = 0
+    while not choice in range(1,2):
+        print("Press 1 to return to main menu, press 2 to quit")
+        choice = input()
+        choice = int(choice)
+        if choice == 1:
+            start_screen()
+        elif choice == 2:
+            quit()
+        else:
+            print("Press 1 to return to main menu, press 2 to quit")
 start_screen()
 #approach(starting_inventory)
