@@ -40,11 +40,12 @@ def start_screen():
             break
         else:
             print("Type 1 to read the introduction, 2 to skip the introduction")
-#inventory = ['Dagger', 'Curare arrow', 'Smoke bomb', 'Fire spray', 'Capsacin spray', 'Deathcap powder']
+
+#decisions = ['SneakGuards' 'KillGuards' '']
 def approach():
     winsound.PlaySound(None, winsound.SND_ASYNC)
     winsound.PlaySound("sounds/REBORN - Midnight Creeping WAV - Looped.wav", winsound.SND_ASYNC | winsound.SND_LOOP)
-    inventory = ['Dagger', 'Curare arrow', 'Smoke bomb', 'Fire spray', 'Acid vial', 'Capsacin spray', 'Deathcap powder', 'Firecrackers']
+    inventory = ['Curare arrow', 'Smoke bomb', 'Fire spray', 'Acid vial', 'Pepper spray', 'Magic mushroom powder']
     print("Description of environment, cave entrance, time of day")
     print("Description of two goblin guards")
     print("Listen to the guards")
@@ -66,7 +67,7 @@ def approach():
                 print("Goblins aren't scared at all, but not aggressive either")
                 print("""
                 1. Draw your dagger and fight them both!
-                2. Fire curare arrow to take one out
+                2. Pepper spray to make the fight easier
                 3. Abandon quest
                 4. Join the goblins""")
                 print(inventory)
@@ -130,14 +131,52 @@ def approach():
                             break
                     elif validation is None:
                         print("TOO SLOW")
-                        dead()
+                        deadel()
                         break
                     else:
                         print("WRONG MOVE")
                         dead()
                         break
                 elif choice == 2:
-                    print("Fire curare arrow, easy fight")
+                    move = '1'
+                    time_limit = 4 # in seconds
+                    validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                    print(validation)
+                    if validation == move:
+                        move = '3'
+                        validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                        if validation == move:
+                            move = '4'
+                            validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                            if validation == move:
+                                print("VICTORY! Lockpicks!")
+                                inventory.append("Lockpicks")
+                                cave_entrance(inventory)
+                                break
+                            elif validation is None:
+                                print("TOO SLOW!")
+                                dead()
+                                break
+                            else:
+                                print("WRONG MOVE!")
+                                dead()
+                                break
+                        elif validation is None:
+                            print("TOO SLOW!")
+                            dead()
+                            break
+                        else:
+                            print("WRONG MOVE!")
+                            dead()
+                            break
+                    elif validation is None:
+                        print("TOO SLOW")
+                        dead()
+                        break
+                    else:
+                        print("WRONG MOVE")
+                        dead()
+                        break
                 elif choice == 3:
                     print("You abandon your crusade")
                     abandon_crusade()
@@ -146,110 +185,71 @@ def approach():
                     print("You join the goblins.")
                     join_goblins()
                     break
+                else:
+                    print("""
+                    1. Draw your dagger and fight them both!
+                    2. Pepper spray to make the fight easier
+                    3. Abandon quest
+                    4. Join the goblins""")
+
         elif choice == 2:
-            choice = 0
-            while not int(choice) in range(1,5):
-                #print("Ambush, then easy deterministic fight.")
-                print(""""Choices
-                1. Obviously wrong combat choice
-                2. Obviously correct combat choice
-                3. Item combat choice
-                4. Pretty obviously wrong combat choice
-                5. Obviously wrong combat choice""")
-                print(inventory)
-                choice = input()
-                choice = int(choice)
-                if choice == 1:
-                    print("Bad option")
-                    dead()
-                    break
-                elif choice == 2:
-                    print("Good option! You find lockpicks on their corpse.")
-                    inventory.append("Lockpicks")
-                    cave_entrance(inventory)
-                    break
-                elif choice == 3:
-                    #this is a trap option, designed to drain items
-                    print("Use Capsacin! You find lockpicks on their corpse.")
-                    inventory.remove("Capsacin spray")
-                    inventory.append("Lockpicks")
-                    cave_entrance(inventory)
-                    break
-                elif choice == 4:
-                    print("Bad option")
-                    dead()
-                    break
-                elif choice == 5:
-                    print("Bad option")
+            #currently the same as the other easy fight
+            print("You take one out and engage the other!")
+            move = '1'
+            time_limit = 4 # in seconds
+            validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+            print(validation)
+            if validation == move:
+                move = '3'
+                validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                if validation == move:
+                    move = '4'
+                    validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
+                    if validation == move:
+                        print("VICTORY! Lockpicks!")
+                        inventory.append("Lockpicks")
+                        cave_entrance(inventory)
+                        break
+                    elif validation is None:
+                        print("TOO SLOW!")
+                        dead()
+                        break
+                    else:
+                        print("WRONG MOVE!")
+                        dead()
+                        break
+                elif validation is None:
+                    print("TOO SLOW!")
                     dead()
                     break
                 else:
-                    print(""""Choices
-                    1. Obviously wrong combat choice
-                    2. Obviously correct combat choice
-                    3. Item combat choice
-                    4. Pretty obviously wrong combat choice
-                    5. Obviously wrong combat choice""")
-                    print(inventory)
-        elif choice == 2:
-            choice = 0
-            while not int(choice) in range(1,5):
-                #print("Ambush, then easy deterministic fight.")
-                print(f"Inventory: {inventory}")
-                print(""""Choices
-                1. Obviously wrong combat choice
-                2. Obviously correct combat choice
-                3. Item combat choice
-                4. Pretty obviously wrong combat choice
-                5. Obviously wrong combat choice""")
-                choice = input()
-                choice = int(choice)
-                if choice == 1:
-                    print("Bad option")
+                    print("WRONG MOVE!")
                     dead()
                     break
-                elif choice == 2:
-                    print("Good option! You find lockpicks on their corpse.")
-                    inventory.append("Lockpicks")
-                    cave_entrance(inventory)
-                    break
-                elif choice == 3:
-                    print("Use item option! You find lockpicks on their corpse.")
-                    inventory.remove("Capsacin spray")
-                    inventory.append("Lockpicks")
-                    cave_entrance(inventory)
-                    break
-                elif choice == 4:
-                    print("Bad option")
-                    dead()
-                    break
-                elif choice == 5:
-                    print("Bad option")
-                    dead()
-                    break
-                else:
-                    print(""""Choices
-                    1. Obviously wrong combat choice
-                    2. Obviously correct combat choice
-                    3. Item combat choice
-                    4. Pretty obviously wrong combat choice
-                    5. Obviously wrong combat choice""")
-                    print(inventory)
+            elif validation is None:
+                print("TOO SLOW")
+                dead()
+                break
+            else:
+                print("WRONG MOVE")
+                dead()
+                break
+
         elif choice == 3:
             choice = 0
             while not int(choice) in range(1,3):
                 #print("Attempt to sneak by, but won't have lockpick options later")
+                #wait convert it to QTE? how to do stealth?
                 print("""
                 1. Attempt to sneak by without a fight
                 2. Use your smoke bomb to guarantee they don't spot you
-                3. Use your firecrackers to distract them and guarantee success
-                4. Abandon your crusade""")
+                3. Abandon your crusade""")
                 print(inventory)
                 choice = input()
                 choice = int(choice)
                 if choice == 1:
                     print("RNG test, pretty easy")
-                    easy_test = random.randrange(1,4)
+                    easy_test = random.randrange(1,3)
                     if easy_test == 2 or 3:
                         print("You win!")
                         cave_entrance(inventory)
@@ -264,11 +264,6 @@ def approach():
                     cave_entrance(inventory)
                     break
                 elif choice == 3:
-                    print("Use firecrackers, guaranteed")
-                    inventory.remove("Firecrackers")
-                    cave_entrance(inventory)
-                    break
-                elif choice == 4:
                     print("You think better of it and abandon your crusade.")
                     abandon_crusade()
                     break
@@ -276,8 +271,7 @@ def approach():
                     print(""""
                     1. Attempt to sneak by
                     2. Use your smoke bomb to guarantee they don't spot you
-                    3. Use your firecrackers to distract them
-                    4. Abandon your crusade""")
+                    3. Abandon your crusade""")
                     print(inventory)
         elif choice == 4:
             print("Abandon crusade, but actually triggers a long, happy ending.")
@@ -298,7 +292,7 @@ def cave_entrance(inventory):
     print(inventory)
 #    print("Removing Lockpicks for testing purposes")
 #    inventory.remove("Dagger")
-#    inventory.append("Rope")
+    inventory.append("Rope")
     print("""
     1. Go to crossroads
     2. also go to crossroads""")
@@ -338,13 +332,54 @@ def crossroads(inventory):
                 break
             else:
                 print("1. Use the rope to escape")
-    elif ("Rope" in inventory and "Lockpicks" in inventory and not "Chief's Heart" in inventory):
+
+    elif ("Rope" in inventory and "Lockpicks" in inventory and "Acid vial" in inventory and not "Chief's Heart" in inventory):
         print("""
-        Standard description + lockpick + flee
+        Standard description + lockpick + acid + flee
         1. Go down the tunnel to the east
         2. Go down the tunnel to the west
         3. Lockpick option
-        4. Abandon your crusade""")
+        4. Pour acid on the lock
+        5. Abandon your crusade""")
+        print(inventory)
+        choice = 0
+        while not choice in range(1,5):
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You go down the tunnel to the east.")
+                warg_den(inventory)
+                break
+            elif choice == 2:
+                print("You go down the tunnel to the west.")
+                duelist_room(inventory)
+                break
+            elif choice == 3:
+                print("This is where the lockpicking puzzle goes.")
+                break
+            elif choice == 4:
+                print("You pour acid on the lock mechanism and go north.")
+                chiefs_hallway(inventory)
+                break
+            elif choice == 5:
+                print("You abandon your quest.")
+                abandon_crusade()
+                break
+            else: print("""
+            1. Go down the tunnel to the east
+            2. Go down the tunnel to the west
+            3. Lockpick option
+            4. Pour acid on lock
+            5. Abandon your crusade""")
+            print(inventory)
+
+    elif ("Lockpicks" in inventory and "Acid vial" in inventory and not "Chief's Heart" in inventory):
+        print("""
+        Standard description + lockpick + acid
+        1. Go down the tunnel to the east
+        2. Go down the tunnel to the west
+        3. Lockpick option
+        4. Pour acid on the lock""")
         print(inventory)
         choice = 0
         while not choice in range(1,4):
@@ -359,17 +394,17 @@ def crossroads(inventory):
                 duelist_room(inventory)
                 break
             elif choice == 3:
-                print("This is where the hard lockpicking puzzle goes.")
+                print("This is where the lockpicking puzzle goes.")
                 break
             elif choice == 4:
-                print("You abandon your quest.")
-                abandon_crusade()
+                print("You pour acid on the lock.")
+                chiefs_hallway(inventory)
                 break
             else: print("""
             1. Go down the tunnel to the east
             2. Go down the tunnel to the west
             3. Lockpick option
-            4. Abandon your crusade""")
+            4. Pour acid on the lock""")
             print(inventory)
 
     elif ("Rope" in inventory and "Chief Key" in inventory and not "Chief's Heart" in inventory):
@@ -436,6 +471,7 @@ def crossroads(inventory):
                 2. Go down the tunnel to the west
                 3. Unlock the door""")
                 print(inventory)
+
     elif ("Lockpicks" in inventory and not "Chief's Heart" in inventory):
         print("""
         Standard description+lockpicking
@@ -464,6 +500,36 @@ def crossroads(inventory):
                 1. Go down the tunnel to the east
                 2. Go down the tunnel to the west
                 3. Try to pick the lock on the chief's door""")
+                print(inventory)
+
+    elif ("Acid vial" in inventory and not "Chief's Heart" in inventory):
+        print("""
+        Standard description+lockpicking
+        1. Go through the door to the east
+        2. Go through the door to the west
+        3. Pour acid on the door's lock""")
+        print(inventory)
+        choice = 0
+        while not choice in range(1,3):
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You go down the tunnel to the east.")
+                warg_den(inventory)
+                break
+            elif choice == 2:
+                print("You go down the tunnel to the west.")
+                duelist_room(inventory)
+                break
+            elif choice == 3:
+                print("This is where the lockpick puzzle goes.")
+                break
+            else:
+                print("""
+                Standard description+lockpicking options
+                1. Go down the tunnel to the east
+                2. Go down the tunnel to the west
+                3. Pour acid on the locked door leading north""")
                 print(inventory)
     else:
         print("""Standard description
@@ -498,7 +564,7 @@ def duelist_room(inventory):
     print("The goblin says, \"Are you ready?\" ")
     print("""
     1. Engage in honorable combat
-    2. Use capsacin spray
+    2. Set him on fire
     3. Join the goblins""")
     choice = 0
     while not choice in range(1,3):
@@ -531,8 +597,8 @@ def duelist_room(inventory):
                 dead()
                 break
         elif choice == 2:
-            print("Spray capsacin")
-            remove.inventory("Capsacin spray")
+            print("You set him on fire.")
+            remove.inventory("Fire spray")
             break
         elif choice == 3:
             print("You decide to join the goblins.")
@@ -541,7 +607,7 @@ def duelist_room(inventory):
         else:
             print("""
             1. Engage him in honorable combat
-            2. Use capsacin spray
+            2. Use pepper spray
             3. Join the goblins""")
 
 # timed input function
@@ -601,37 +667,20 @@ def samurai():
         print("WRONG MOVE")
         dead()
 
-
-
-def living_quarters(inventory):
-    print("You have entered the goblin's living quarters.")
-    #include description of wide variety of beds and goblins
-    print(inventory)
-
 def warg_den(inventory):
+    #warg den is now the storage area
     print("You have entered the warg den.")
-    print(inventory)
-
-def storage_area(inventory):
-    print("You have entered the storage area.")
     print(inventory)
 
 def pond(inventory):
     print("You have entered the underground pond area.")
     #something exists in the pond - remnant of previous residents?
     #ghost of christmas future?
-
-def shamans_quarters(inventory):
-    print("You have entered the shamans_quarters.")
-    print(inventory)
+    #cant refactor this, important!
 
 def chiefs_hallway(inventory):
     print("You have entered the hallway leading to the Chief's chamber.")
-    print(inventory)
-    #originally just one encounter before chief, but maybe add something?
-
-def concubines(inventory):
-    print("You have entered the room with the concubines.")
+    #this is where the concubines are now, grand hallway/lounge
     print(inventory)
 
 def goblin_chief(inventory):
