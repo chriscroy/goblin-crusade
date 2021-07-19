@@ -49,7 +49,6 @@ def approach():
     print("Description of environment, cave entrance, time of day")
     print("Description of two goblin guards")
     print("Listen to the guards")
-    #the guards must be killed for lockpicks to go straight for chief
     print("""
     1. Walk up and talk to them
     2. Ambush
@@ -292,7 +291,7 @@ def cave_entrance(inventory):
     print(inventory)
 #    print("Removing Lockpicks for testing purposes")
 #    inventory.remove("Dagger")
-    inventory.append("Rope")
+#    inventory.append("Rope")
     print("""
     1. Go to crossroads
     2. also go to crossroads""")
@@ -333,6 +332,72 @@ def crossroads(inventory):
             else:
                 print("1. Use the rope to escape")
 
+    elif ("Rope" in inventory and "Chief Key" in inventory and not "Chief's Heart" in inventory):
+        print("""
+        Standard description + unlock + flee
+        1. Go down the tunnel to the east
+        2. Go down the tunnel to the west
+        3. Unlock the door
+        4. Abandon your crusade""")
+        print(inventory)
+        choice = 0
+        while not choice in range(1,4):
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You go down the tunnel to the east.")
+                warg_den_cleared(inventory)
+                break
+            elif choice == 2:
+                print("You go down the tunnel to the west.")
+                duelist_room_cleared(inventory)
+                break
+            elif choice == 3:
+                print("You unlock the door and head north.")
+                chiefs_hallway(inventory)
+                break
+            elif choice == 4:
+                print("You abandon your crusade.")
+                abandon_crusade()
+                break
+            else:
+                print("""
+                1. Go down the tunnel to the east
+                2. Go down the tunnel to the west
+                3. Unlock the door
+                4. Abandon your crusade""")
+                print(inventory)
+
+    elif ("Chief Key" in inventory and not "Chief's Heart" in inventory):
+        print("""
+        Standard description+unlock option
+        1. Go down the tunnel to the east
+        2. Go down the tunnel to the west
+        3. Unlock the door""")
+        print(inventory)
+        choice = 0
+        while choice not in range(1,3):
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("Go down the tunnel to the west.")
+                duelist_room_cleared(inventory)
+                break
+            elif choice == 2:
+                print("Go down the tunnel to the east.")
+                warg_den(inventory)
+                break
+            elif choice == 3:
+                print("You unlock the chief's door and head north.")
+                chiefs_hallway(inventory)
+                break
+            else:
+                print("""
+                1. Go down the tunnel to the east
+                2. Go down the tunnel to the west
+                3. Unlock the door""")
+                print(inventory)
+
     elif ("Rope" in inventory and "Lockpicks" in inventory and "Acid vial" in inventory and not "Chief's Heart" in inventory):
         print("""
         Standard description + lockpick + acid + flee
@@ -348,7 +413,7 @@ def crossroads(inventory):
             choice = int(choice)
             if choice == 1:
                 print("You go down the tunnel to the east.")
-                warg_den(inventory)
+                warg_den_cleared(inventory)
                 break
             elif choice == 2:
                 print("You go down the tunnel to the west.")
@@ -406,71 +471,6 @@ def crossroads(inventory):
             3. Lockpick option
             4. Pour acid on the lock""")
             print(inventory)
-
-    elif ("Rope" in inventory and "Chief Key" in inventory and not "Chief's Heart" in inventory):
-        print("""
-        Standard description + unlock + flee
-        1. Go down the tunnel to the east
-        2. Go down the tunnel to the west
-        3. Unlock the door
-        4. Abandon your crusade""")
-        print(inventory)
-        choice = 0
-        while not choice in range(1,4):
-            choice = input()
-            choice = int(choice)
-            if choice == 1:
-                print("You go down the tunnel to the east.")
-                warg_den(inventory)
-                break
-            elif choice == 2:
-                print("You go down the tunnel to the west.")
-                duelist_room(inventory)
-                break
-            elif choice == 3:
-                print("You unlock the door and head north.")
-                chiefs_hallway(inventory)
-                break
-            elif choice == 4:
-                print("You abandon your crusade.")
-                abandon_crusade()
-                break
-            else:
-                print("""
-                1. Go down the tunnel to the east
-                2. Go down the tunnel to the west
-                3. Unlock the door
-                4. Abandon your crusade""")
-                print(inventory)
-    elif ("Chief Key" in inventory and not "Chief's Heart" in inventory):
-        print("""
-        Standard description+unlock option
-        1. Go down the tunnel to the east
-        2. Go down the tunnel to the west
-        3. Unlock the door""")
-        print(inventory)
-        choice = 0
-        while choice not in range(1,3):
-            choice = input()
-            choice = int(choice)
-            if choice == 1:
-                print("Go through the tunnel to the west.")
-                duelist_room(inventory)
-                break
-            elif choice == 2:
-                print("Go through the tunnel to the east.")
-                warg_den(inventory)
-                break
-            elif choice == 3:
-                print("You unlock the chief's door and head north.")
-                chiefs_hallway(inventory)
-                break
-            else:
-                print("""
-                1. Go down the tunnel to the east
-                2. Go down the tunnel to the west
-                3. Unlock the door""")
-                print(inventory)
 
     elif ("Lockpicks" in inventory and not "Chief's Heart" in inventory):
         print("""
@@ -531,6 +531,7 @@ def crossroads(inventory):
                 2. Go down the tunnel to the west
                 3. Pour acid on the locked door leading north""")
                 print(inventory)
+
     else:
         print("""Standard description
         1. Go down the tunnel to the east
@@ -561,7 +562,7 @@ def crossroads(inventory):
 def duelist_room(inventory):
     print("You have entered a common area, filled with noncombatants.")
     print(inventory)
-    print("The goblin says, \"Are you ready?\" ")
+    print("The large goblin says, \"Are you ready?\" ")
     print("""
     1. Engage in honorable combat
     2. Set him on fire
@@ -579,7 +580,9 @@ def duelist_room(inventory):
                 move = '2'
                 validation = timed_input('HE SLASHES LOW\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
                 if validation == move:
-                    print("Test successful")
+                    print("Victory! You find a large key on him.")
+                    inventory.append("Chief Key")
+                    crossroads(inventory)
                 elif validation is None:
                     print("TOO SLOW!")
                     dead()
@@ -597,8 +600,10 @@ def duelist_room(inventory):
                 dead()
                 break
         elif choice == 2:
-            print("You set him on fire.")
-            remove.inventory("Fire spray")
+            print("You set him on fire, then finish him off, then take key.")
+            inventory.remove("Fire spray")
+            inventory.append("Chief Key")
+            crossroads(inventory)
             break
         elif choice == 3:
             print("You decide to join the goblins.")
@@ -607,7 +612,7 @@ def duelist_room(inventory):
         else:
             print("""
             1. Engage him in honorable combat
-            2. Use pepper spray
+            2. Use fire spray
             3. Join the goblins""")
 
 # timed input function
@@ -615,7 +620,7 @@ def duelist_room(inventory):
 # python2 or python3
 # this does not deal with arrow keys.
 # this probably won't work in IDLE
-# I copied this code off Stack Exchange.
+# I copied this code off Reddit.
 # I don't know how it works but it does.
 def print_flush(*args):
     print(*args, end='')
@@ -667,11 +672,119 @@ def samurai():
         print("WRONG MOVE")
         dead()
 
+def duelist_room_cleared(inventory):
+    print("Description of the room and the dead goblin, nothing to do now but go back to the crossroads")
+    crossroads(inventory)
+
+def warg_den_cleared():
+    print("Description of the room and the dead wargs, give choice to go to pond or back to crossroads.")
+    crossroads(inventory)
+
 def warg_den(inventory):
     #warg den is now the storage area
     print("You have entered the warg den.")
+    print("There are two wargs sleeping next to each other in this storage area.")
     print(inventory)
-
+    choice = 0
+    if ("Fire spray" in inventory and "Meat" in inventory and "Fire Spray" in inventory):
+        print("""
+        1. Attack the wargs
+        2. Set both of the wargs on fire
+        3. Poison meat with magic mushroom powder and leave out
+        """)
+        while not choice in range(1,3):
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You attack the wargs and find some rope.")
+                print("QTE")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            elif choice == 2:
+                print("You set the wargs on fire and find some rope.")
+                inventory.remove("Fire spray")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            elif choice == 3:
+                print("You mix the mushroom powder with the meat and feed it to the dogs, then find some rope")
+                inventory.remove("Meat")
+                inventory.remove("Magic mushroom powder")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            else:
+                print("""
+                1. Attack the wargs
+                2. Set both of the wargs on fire
+                3. Poison meat with magic mushroom powder and leave out
+                """)
+    elif ("Fire spray" in inventory and not "Meat" in inventory):
+        while not choice in range(1,2):
+            print("""
+            1. Attack the wargs
+            2. Set both of the wargs on fire""")
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You attack the wargs and find some rope.")
+                print("QTE")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            elif choice == 2:
+                print("You set the wargs on fire and find some rope.")
+                inventory.remove("Fire spray")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            else:
+                print("""
+                1. Attack the wargs
+                2. Set both of the wargs on fire
+                """)
+    elif ("Meat" in inventory and "Magic mushroom powder" in inventory):
+        while not choice in range(1,2):
+            print("""
+            1. Attack the wargs
+            2. Feed the wargs poisoned meat""")
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You attack the wargs and find some rope.")
+                print("QTE")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            elif choice == 2:
+                print("You mix the mushroom powder with the meat and feed it to the dogs, then find some rope")
+                inventory.remove("Meat")
+                inventory.remove("Magic mushroom powder")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            else:
+                print("""
+                1. Attack the wargs
+                2. Feed the wargs poisoned meat
+                """)
+    else:
+        while not choice in range(1):
+            print("""
+            1. Attack the wargs""")
+            choice = input()
+            choice = int(choice)
+            if choice == 1:
+                print("You attack the wargs and find some rope.")
+                print("QTE")
+                inventory.append("Rope")
+                crossroads(inventory)
+                break
+            else:
+                print("""
+                1. Attack the wargs
+                """)
 def pond(inventory):
     print("You have entered the underground pond area.")
     #something exists in the pond - remnant of previous residents?
