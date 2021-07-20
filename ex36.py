@@ -4,6 +4,8 @@ from __future__ import print_function
 from msvcrt import kbhit, getwch
 import time
 import sys
+from pytimedinput import *
+
 import random
 import winsound
 def start_screen():
@@ -45,7 +47,7 @@ def start_screen():
 def approach():
     winsound.PlaySound(None, winsound.SND_ASYNC)
     winsound.PlaySound("sounds/REBORN - Midnight Creeping WAV - Looped.wav", winsound.SND_ASYNC | winsound.SND_LOOP)
-    inventory = ['Curare arrow', 'Smoke bomb', 'Fire spray', 'Acid vial', 'Pepper spray', 'Magic mushroom powder']
+    inventory = ['Acid vial', 'Curare arrow', 'Fire spray', 'Pepper spray', 'Magic mushroom powder', 'Smoke bomb']
     print("Description of environment, cave entrance, time of day")
     print("Description of two goblin guards")
     print("Listen to the guards")
@@ -73,107 +75,108 @@ def approach():
                 choice = input()
                 choice = int(choice)
                 if choice == 1:
-                    move = '1'
-                    time_limit = 2.5 # in seconds
-                    validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                    print(validation)
-                    if validation == move:
-                        move = '2'
-                        validation = timed_input('LOW STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                        if validation == move:
-                            move = '4'
-                            validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                            if validation == move:
-                                move = '3'
-                                #changing the time limit because one is down
-                                time_limit = 4.5
-                                validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                                if validation == move:
-                                    move = '4'
-                                    validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                                    if validation == move:
-                                        print("VICTORY! Lockpicks!")
-                                        inventory.append("Lockpicks")
-                                        cave_entrance(inventory)
-                                        break
-                                    elif validation is None:
-                                        print("TOO SLOW!")
-                                        dead()
-                                        break
-                                    else:
-                                        print("WRONG MOVE!")
-                                        dead()
-                                        break
-                                elif validation is None:
-                                    print("TOO SLOW!")
-                                    dead()
-                                    break
-                                else:
-                                    print("WRONG MOVE!")
-                                    dead()
-                                    break
-                            elif validation is None:
-                                print("TOO SLOW!")
-                                dead()
-                                break
-                            else:
-                                print("WRONG MOVE!")
-                                dead()
-                                break
-                        elif validation is None:
-                            print("TOO SLOW!")
-                            dead()
-                            break
-                        else:
-                            print("WRONG MOVE!")
-                            dead()
-                            break
-                    elif validation is None:
-                        print("TOO SLOW")
-                        deadel()
+                    print("You take one out and engage the other! You have 5 seconds per move.")
+                    userNumber, timedOut = timedInteger("LOW STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                    if(timedOut):
+                        print("Too slow!")
+                        dead()
                         break
+                    elif(userNumber == 2 or 7):
+                        userNumber, timedOut = timedInteger("HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                        if(timedOut):
+                            print("Too slow!")
+                            dead()
+                            break
+                        elif(userNumber == 1 or 7):
+                            userNumber, timedOut = timedInteger("ONE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                            if(timedOut):
+                                print("Too slow!")
+                                dead()
+                                break
+                            elif(userNumber == 4 or 7):
+                                userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                                if(timedOut):
+                                    print("Too slow!")
+                                    dead()
+                                    break
+                                elif(userNumber == 3 or 7):
+                                    userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                                    if(timedOut):
+                                        print("Too slow!")
+                                        dead()
+                                        break
+                                    elif(userNumber == 3 or 7):
+                                        userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                                        if(timedOut):
+                                            print("Too slow!")
+                                            dead()
+                                            break
+                                        elif(userNumber == 4 or 7):
+                                            print("VICTORY! LOCKPICKS FOUND!")
+                                            inventory.append("Lockpicks")
+                                            inventory.sort()
+                                            cave_entrance(inventory)
+                                            break
+                                        else:
+                                            print("Wrong move! You should have struck!")
+                                            dead()
+                                            break
+                                    else:
+                                        print("Wrong move! You should have parried!")
+                                        dead()
+                                        break
+                                else:
+                                    print("Wrong move! You should have parried!")
+                                    dead()
+                                    break
+                            else:
+                                print("Wrong move! You should have striked!")
+                                dead()
+                                break
+                        else:
+                            print("Wrong move! You should have ducked!")
+                            dead()
+                            break
                     else:
-                        print("WRONG MOVE")
+                        print("Wrong move! You should have jumped!")
                         dead()
                         break
                 elif choice == 2:
-                    move = '1'
-                    time_limit = 4 # in seconds
-                    validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                    print(validation)
-                    if validation == move:
-                        move = '3'
-                        validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                        if validation == move:
-                            move = '4'
-                            validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                            if validation == move:
-                                print("VICTORY! Lockpicks!")
-                                inventory.append("Lockpicks")
-                                cave_entrance(inventory)
-                                break
-                            elif validation is None:
-                                print("TOO SLOW!")
-                                dead()
-                                break
-                            else:
-                                print("WRONG MOVE!")
-                                dead()
-                                break
-                        elif validation is None:
-                            print("TOO SLOW!")
-                            dead()
-                            break
-                        else:
-                            print("WRONG MOVE!")
-                            dead()
-                            break
-                    elif validation is None:
-                        print("TOO SLOW")
+                    #currently the same as the other easy fight
+                    print("You take one out and engage the other! You have 5 seconds per move.")
+                    userNumber, timedOut = timedInteger("HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                    if(timedOut):
+                        print("Too slow!")
                         dead()
                         break
+                    elif(userNumber == 1 or 7):
+                        userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                        if(timedOut):
+                            print("Too slow!")
+                            dead()
+                            break
+                        elif(userNumber == 3 or 7):
+                            userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                            if(timedOut):
+                                print("Too slow!")
+                                dead()
+                                break
+                            elif(userNumber == 4 or 7):
+                                print("VICTORY! You search the corpse and find lockpicks.")
+                                inventory.append("Lockpicks")
+                                inventory.sort()
+                                cave_entrance(inventory)
+                                break
+                            else:
+                                print("Wrong move! You should have striked!")
+                                dead()
+                                break
+                        else:
+                            print("Wrong move! You should have parried!")
+                            dead()
+                            break
                     else:
-                        print("WRONG MOVE")
+                        print("Wrong move! You should have ducked!")
                         dead()
                         break
                 elif choice == 3:
@@ -193,44 +196,40 @@ def approach():
 
         elif choice == 2:
             #currently the same as the other easy fight
-            print("You take one out and engage the other!")
-            move = '1'
-            time_limit = 4 # in seconds
-            validation = timed_input('HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-            print(validation)
-            if validation == move:
-                move = '3'
-                validation = timed_input('MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                if validation == move:
-                    move = '4'
-                    validation = timed_input('HE\'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                    if validation == move:
-                        print("VICTORY! Lockpicks!")
-                        inventory.append("Lockpicks")
-                        cave_entrance(inventory)
-                        break
-                    elif validation is None:
-                        print("TOO SLOW!")
-                        dead()
-                        break
-                    else:
-                        print("WRONG MOVE!")
-                        dead()
-                        break
-                elif validation is None:
-                    print("TOO SLOW!")
-                    dead()
-                    break
-                else:
-                    print("WRONG MOVE!")
-                    dead()
-                    break
-            elif validation is None:
-                print("TOO SLOW")
+            print("You take one out and engage the other! You have 5 seconds per move.")
+            userNumber, timedOut = timedInteger("HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+            if(timedOut):
+                print("Too slow!")
                 dead()
                 break
+            elif(userNumber == 1 or 7):
+                userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                if(timedOut):
+                    print("Too slow!")
+                    dead()
+                    break
+                elif(userNumber == 3 or 7):
+                    userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                    if(timedOut):
+                        print("Too slow!")
+                        dead()
+                        break
+                    elif(userNumber == 4 or 7):
+                        print("VICTORY! You search the corpse and find lockpicks.")
+                        inventory.append("Lockpicks")
+                        inventory.sort()
+                        cave_entrance(inventory)
+                        break
+                    else:
+                        print("Wrong move! You should have striked!")
+                        dead()
+                        break
+                else:
+                    print("Wrong move! You should have parried!")
+                    dead()
+                    break
             else:
-                print("WRONG MOVE")
+                print("Wrong move! You should have ducked!")
                 dead()
                 break
 
@@ -560,6 +559,7 @@ def crossroads(inventory):
             print(inventory)
 
 def duelist_room(inventory):
+    #need to add inventory checks here, ugh
     print("You have entered a common area, filled with noncombatants.")
     print(inventory)
     print("The large goblin says, \"Are you ready?\" ")
@@ -572,37 +572,48 @@ def duelist_room(inventory):
         choice = input()
         choice = int(choice)
         if choice == 1:
-            move = '1'
-            time_limit = 2 # in seconds
-            validation = timed_input('HE SLASHES HIGH\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-            print(validation)
-            if validation == move:
-                move = '2'
-                validation = timed_input('HE SLASHES LOW\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-                if validation == move:
-                    print("Victory! You find a large key on him.")
-                    inventory.append("Chief Key")
-                    crossroads(inventory)
-                elif validation is None:
-                    print("TOO SLOW!")
-                    dead()
-                    break
-                else:
-                    print("WRONG MOVE!")
-                    dead()
-                    break
-            elif validation is None:
-                print("TOO SLOW")
+            #currently the same as the easy fights
+            print("You engage the warrior! You have 5 seconds per move.")
+            userNumber, timedOut = timedInteger("HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+            if(timedOut):
+                print("Too slow!")
                 dead()
                 break
+            elif(userNumber == 1 or 7):
+                userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                if(timedOut):
+                    print("Too slow!")
+                    dead()
+                    break
+                elif(userNumber == 3 or 7):
+                    userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
+                    if(timedOut):
+                        print("Too slow!")
+                        dead()
+                        break
+                    elif(userNumber == 4 or 7):
+                        print("VICTORY! You take the key off his corpse.")
+                        inventory.append("Chief key")
+                        inventory.sort()
+                        crossroads(inventory)
+                        break
+                    else:
+                        print("Wrong move! You should have striked!")
+                        dead()
+                        break
+                else:
+                    print("Wrong move! You should have parried!")
+                    dead()
+                    break
             else:
-                print("WRONG MOVE")
+                print("Wrong move! You should have ducked!")
                 dead()
                 break
         elif choice == 2:
             print("You set him on fire, then finish him off, then take key.")
             inventory.remove("Fire spray")
             inventory.append("Chief Key")
+            inventory.sort()
             crossroads(inventory)
             break
         elif choice == 3:
@@ -699,12 +710,14 @@ def warg_den(inventory):
                 print("You attack the wargs and find some rope.")
                 print("QTE")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             elif choice == 2:
                 print("You set the wargs on fire and find some rope.")
                 inventory.remove("Fire spray")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             elif choice == 3:
@@ -712,6 +725,7 @@ def warg_den(inventory):
                 inventory.remove("Meat")
                 inventory.remove("Magic mushroom powder")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             else:
@@ -731,12 +745,14 @@ def warg_den(inventory):
                 print("You attack the wargs and find some rope.")
                 print("QTE")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             elif choice == 2:
                 print("You set the wargs on fire and find some rope.")
                 inventory.remove("Fire spray")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             else:
@@ -755,6 +771,7 @@ def warg_den(inventory):
                 print("You attack the wargs and find some rope.")
                 print("QTE")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             elif choice == 2:
@@ -762,6 +779,7 @@ def warg_den(inventory):
                 inventory.remove("Meat")
                 inventory.remove("Magic mushroom powder")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             else:
@@ -779,6 +797,7 @@ def warg_den(inventory):
                 print("You attack the wargs and find some rope.")
                 print("QTE")
                 inventory.append("Rope")
+                inventory.sort()
                 crossroads(inventory)
                 break
             else:
