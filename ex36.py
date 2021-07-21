@@ -1,16 +1,10 @@
-#These must be at the top of the file or the QTEs don't work
-#I do not understand why.
-from __future__ import print_function
-from msvcrt import kbhit, getwch
-import time
-import sys
 from pytimedinput import *
 
 import random
 import winsound
 def start_screen():
     winsound.PlaySound(None, winsound.SND_ASYNC)
-    winsound.PlaySound("sounds/REBORN - Visions of Freedom WAV.wav", winsound.SND_ASYNC)
+    winsound.PlaySound("sounds/REBORN - Visions of Freedom WAV - LOOPED.wav", winsound.SND_ASYNC | winsound.SND_LOOP)
     print(f"""
  ██████╗  ██████╗ ██████╗ ██╗     ██╗███╗   ██╗
 ██╔════╝ ██╔═══██╗██╔══██╗██║     ██║████╗  ██║
@@ -81,37 +75,37 @@ def approach():
                         print("Too slow!")
                         dead()
                         break
-                    elif(userNumber == 2 or 7):
+                    elif(userNumber == 2 or userNumber == 7):
                         userNumber, timedOut = timedInteger("HIGH STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                         if(timedOut):
                             print("Too slow!")
                             dead()
                             break
-                        elif(userNumber == 1 or 7):
+                        elif(userNumber == 1 or userNumber == 7):
                             userNumber, timedOut = timedInteger("ONE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                             if(timedOut):
                                 print("Too slow!")
                                 dead()
                                 break
-                            elif(userNumber == 4 or 7):
+                            elif(userNumber == 4 or userNumber == 7):
                                 userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                                 if(timedOut):
                                     print("Too slow!")
                                     dead()
                                     break
-                                elif(userNumber == 3 or 7):
+                                elif(userNumber == 3 or userNumber == 7):
                                     userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                                     if(timedOut):
                                         print("Too slow!")
                                         dead()
                                         break
-                                    elif(userNumber == 3 or 7):
+                                    elif(userNumber == 3 or userNumber == 7):
                                         userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                                         if(timedOut):
                                             print("Too slow!")
                                             dead()
                                             break
-                                        elif(userNumber == 4 or 7):
+                                        elif(userNumber == 4 or userNumber == 7):
                                             print("VICTORY! LOCKPICKS FOUND!")
                                             inventory.append("Lockpicks")
                                             inventory.sort()
@@ -149,19 +143,19 @@ def approach():
                         print("Too slow!")
                         dead()
                         break
-                    elif(userNumber == 1 or 7):
+                    elif(userNumber == 1 or userNumber == 7):
                         userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                         if(timedOut):
                             print("Too slow!")
                             dead()
                             break
-                        elif(userNumber == 3 or 7):
+                        elif(userNumber == 3 or userNumber == 7):
                             userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                             if(timedOut):
                                 print("Too slow!")
                                 dead()
                                 break
-                            elif(userNumber == 4 or 7):
+                            elif(userNumber == 4 or userNumber == 7):
                                 print("VICTORY! You search the corpse and find lockpicks.")
                                 inventory.append("Lockpicks")
                                 inventory.sort()
@@ -202,19 +196,19 @@ def approach():
                 print("Too slow!")
                 dead()
                 break
-            elif(userNumber == 1 or 7):
+            elif(userNumber == 1 or userNumber == 7):
                 userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                 if(timedOut):
                     print("Too slow!")
                     dead()
                     break
-                elif(userNumber == 3 or 7):
+                elif(userNumber == 3 or userNumber == 7):
                     userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                     if(timedOut):
                         print("Too slow!")
                         dead()
                         break
-                    elif(userNumber == 4 or 7):
+                    elif(userNumber == 4 or userNumber == 7):
                         print("VICTORY! You search the corpse and find lockpicks.")
                         inventory.append("Lockpicks")
                         inventory.sort()
@@ -579,19 +573,19 @@ def duelist_room(inventory):
                 print("Too slow!")
                 dead()
                 break
-            elif(userNumber == 1 or 7):
+            elif(userNumber == 1 or userNumber == 7):
                 userNumber, timedOut = timedInteger("MID STAB\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                 if(timedOut):
                     print("Too slow!")
                     dead()
                     break
-                elif(userNumber == 3 or 7):
+                elif(userNumber == 3 or userNumber == 7):
                     userNumber, timedOut = timedInteger("HE'S OPEN\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE", maxLength = 1)
                     if(timedOut):
                         print("Too slow!")
                         dead()
                         break
-                    elif(userNumber == 4 or 7):
+                    elif(userNumber == 4 or userNumber == 7):
                         print("VICTORY! You take the key off his corpse.")
                         inventory.append("Chief key")
                         inventory.sort()
@@ -625,63 +619,6 @@ def duelist_room(inventory):
             1. Engage him in honorable combat
             2. Use fire spray
             3. Join the goblins""")
-
-# timed input function
-# Windows only
-# python2 or python3
-# this does not deal with arrow keys.
-# this probably won't work in IDLE
-# I copied this code off Reddit.
-# I don't know how it works but it does.
-def print_flush(*args):
-    print(*args, end='')
-    sys.stdout.flush()
-
-def timed_input(prompt='', timeout=None):
-    if timeout is None:
-        return input(prompt)
-    print_flush(prompt)
-    start = time.time()
-    response = ''
-    while time.time() - start < timeout:
-        if kbhit():
-            char = getwch()
-            if char == '\r':
-                break
-            elif char == '\x08': # backspace
-                if response:
-                    print_flush(char, char)
-                    response = response[:-1]
-            else:
-                print_flush(char)
-                response += char
-        time.sleep(0.01)
-    else:
-        response = None
-    print()
-    return response
-
-### Test / Demo code:
-def samurai():
-    move = '1'
-    time_limit = 2 # in seconds
-    validation = timed_input('HE SLASHES HIGH\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-    print(validation)
-    if validation == move:
-        move = '2'
-        validation = timed_input('HE SLASHES LOW\n1. DUCK\n2. JUMP\n3. PARRY\n4. STRIKE', time_limit)
-        if validation == key:
-            print("Test successful")
-        elif validation is None:
-            print("TOO SLOW!")
-        else:
-            print("WRONG MOVE!")
-    elif validation is None:
-        print("TOO SLOW")
-        dead()
-    else:
-        print("WRONG MOVE")
-        dead()
 
 def duelist_room_cleared(inventory):
     print("Description of the room and the dead goblin, nothing to do now but go back to the crossroads")
@@ -831,7 +768,7 @@ def dead():
     #stops music
     winsound.PlaySound(None, winsound.SND_ASYNC)
     #plays death music
-    winsound.PlaySound("sounds/REBORN - The Fallen WAV.wav", winsound.SND_ASYNC | winsound.SND_ALIAS)
+    winsound.PlaySound("sounds/REBORN - The Fallen WAV - LOOPED.wav", winsound.SND_ASYNC | winsound.SND_LOOP)
     print("""
      ██████╗  █████╗ ███╗   ███╗███████╗
     ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
