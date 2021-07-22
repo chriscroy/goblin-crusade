@@ -22,7 +22,7 @@ def start_screen():
     choice = input()
     print("Type 1 to read the introduction, 2 to skip the introduction")
     choice = 0
-    while choice not in range(1,2):
+    while choice not in range(1,3):
         choice = input()
         choice = int(choice)
         if choice == 1:
@@ -52,12 +52,12 @@ def approach():
     4. Abandon quest""")
     print(inventory)
     choice = 0
-    while not choice in range(1,4):
+    while not choice in range(1,5):
         choice = input()
         choice = int(choice)
         if choice == 1:
             choice = 0
-            while not choice in range(1,4):
+            while not choice in range(1,5):
                 print("Walk up, talk, print words, arrogant conversation")
                 print("Goblins aren't scared at all, but not aggressive either")
                 print("""
@@ -229,7 +229,7 @@ def approach():
 
         elif choice == 3:
             choice = 0
-            while not int(choice) in range(1,3):
+            while not int(choice) in range(1,4):
                 #print("Attempt to sneak by, but won't have lockpick options later")
                 #wait convert it to QTE? how to do stealth?
                 print("""
@@ -289,7 +289,7 @@ def cave_entrance(inventory):
     1. Go to crossroads
     2. also go to crossroads""")
     choice = 0
-    while not choice in range(1,2):
+    while not choice in range(1,3):
         choice = input()
         choice = int(choice)
         if choice == 1:
@@ -316,7 +316,7 @@ def crossroads(inventory):
         1. Use the rope to escape""")
     #implement a check in the chief's room to give a rope if they don't have it
         choice = 0
-        while not choice in range(1):
+        while not choice in range(1,2):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -334,7 +334,7 @@ def crossroads(inventory):
         4. Abandon your crusade""")
         print(inventory)
         choice = 0
-        while not choice in range(1,4):
+        while not choice in range(1,5):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -369,7 +369,7 @@ def crossroads(inventory):
         3. Unlock the door""")
         print(inventory)
         choice = 0
-        while choice not in range(1,3):
+        while choice not in range(1,4):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -401,7 +401,7 @@ def crossroads(inventory):
         5. Abandon your crusade""")
         print(inventory)
         choice = 0
-        while not choice in range(1,5):
+        while not choice in range(1,6):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -440,7 +440,7 @@ def crossroads(inventory):
         4. Pour acid on the lock""")
         print(inventory)
         choice = 0
-        while not choice in range(1,4):
+        while not choice in range(1,5):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -473,7 +473,7 @@ def crossroads(inventory):
         3. Try to pick the lock on the chief's door""")
         print(inventory)
         choice = 0
-        while not choice in range(1,3):
+        while not choice in range(1,4):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -503,7 +503,7 @@ def crossroads(inventory):
         3. Pour acid on the door's lock""")
         print(inventory)
         choice = 0
-        while not choice in range(1,3):
+        while not choice in range(1,4):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -532,7 +532,7 @@ def crossroads(inventory):
         3. Try to force the door""")
         print(inventory)
         choice = 0
-        while choice not in range(1,3):
+        while choice not in range(1,4):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -562,7 +562,7 @@ def duelist_room(inventory):
     2. Set him on fire
     3. Join the goblins""")
     choice = 0
-    while not choice in range(1,3):
+    while not choice in range(1,4):
         choice = input()
         choice = int(choice)
         if choice == 1:
@@ -640,7 +640,7 @@ def warg_den(inventory):
         2. Set both of the wargs on fire
         3. Poison meat with magic mushroom powder and leave out
         """)
-        while not choice in range(1,3):
+        while not choice in range(1,4):
             choice = input()
             choice = int(choice)
             if choice == 1:
@@ -672,7 +672,7 @@ def warg_den(inventory):
                 3. Poison meat with magic mushroom powder and leave out
                 """)
     elif ("Fire spray" in inventory and not "Meat" in inventory):
-        while not choice in range(1,2):
+        while not choice in range(1,3):
             print("""
             1. Attack the wargs
             2. Set both of the wargs on fire""")
@@ -698,7 +698,7 @@ def warg_den(inventory):
                 2. Set both of the wargs on fire
                 """)
     elif ("Meat" in inventory and "Magic mushroom powder" in inventory):
-        while not choice in range(1,2):
+        while not choice in range(1,3):
             print("""
             1. Attack the wargs
             2. Feed the wargs poisoned meat""")
@@ -783,7 +783,7 @@ def dead():
     ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
      ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝ """)
     choice = 0
-    while not choice in range(1,2):
+    while not choice in range(1,3):
         print("Press 1 to return to main menu, press 2 to quit")
         choice = input()
         choice = int(choice)
